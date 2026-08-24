@@ -29,7 +29,7 @@ interface AdminSidebarProps {
   pathname: string;
 }
 
-const LOGO_SRC = "/alveo-logo.png";
+const LOGO_SRC = "/avida-logo.png";
 
 const fetcherWithAuth = async (url: string) => {
   const headers = getAuthHeaders();
