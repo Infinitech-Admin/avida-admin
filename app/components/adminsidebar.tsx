@@ -177,13 +177,14 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ pathname }) => {
 
   return (
     <>
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-30 flex h-16 items-center justify-between bg-white shadow-sm px-4">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-30 flex h-20 items-center justify-between bg-white shadow-sm px-4">
         <Image
           src={LOGO_SRC}
           alt="ALVEO LOGO"
-          width={130}
-          height={50}
-          className="object-contain h-9 w-auto"
+          width={152}
+          height={126}
+          priority
+          className="object-contain h-14 w-auto"
         />
         <button
           className="p-2 text-2xl rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600"
@@ -199,13 +200,14 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ pathname }) => {
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0`}
       >
-        <div className="p-4 text-xl font-semibold text-center hidden lg:block">
+        <div className="p-4 hidden lg:flex justify-center">
           <Image
             src={LOGO_SRC}
             alt="ALVEO LOGO"
-            width={250}
-            height={100}
-            className="object-contain w-full h-auto"
+            width={152}
+            height={126}
+            priority
+            className="object-contain h-24 w-auto"
           />
         </div>
 
@@ -213,9 +215,9 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ pathname }) => {
           <Image
             src={LOGO_SRC}
             alt="ALVEO LOGO"
-            width={150}
-            height={60}
-            className="object-contain h-10 w-auto"
+            width={152}
+            height={126}
+            className="object-contain h-14 w-auto"
           />
           <button
             className="p-2 text-xl rounded-md hover:bg-gray-100"
