@@ -29,7 +29,7 @@ export async function POST(req: Request) {
   const mailOptions = {
     from: process.env.GMAIL_USER,
     to: email,
-    subject: "ALVEO : Your Listing is Declined!",
+    subject: "AVIDA : Your Listing is Declined!",
     html: emailHtml,
   };
 

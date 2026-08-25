@@ -35,9 +35,9 @@ export const ApprovedViewingEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Img
-          src="https://infinitech-api27.site/logo/dmci-logo-only.png"
+          src="https://infinitech-api27.site/logo/avida-logo-only.png"
           height="170"
-          alt="DMCI Homes Logo"
+          alt="AVIDA Logo"
           style={logo}
         />
         <Heading style={h1}>Viewing Approved for {property}!</Heading>
@@ -69,10 +69,10 @@ export const ApprovedViewingEmail = ({
           If you have any questions or need assistance with your viewing, our
           support team is here to help.
         </Text>
-        <Text style={text}>Thank you for choosing DMCI Homes!</Text>
+        <Text style={text}>Thank you for choosing AVIDA!</Text>
         <Hr style={hr} />
         <Text style={footer}>
-          © 2025 DMCI Homes. All rights reserved.
+          © 2025 AVIDA. All rights reserved.
           <br />
           Philippines
         </Text>

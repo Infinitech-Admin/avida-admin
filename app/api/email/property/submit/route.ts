@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     const mailOptions = {
       from: process.env.GMAIL_USER,
       to: email,
-      subject: "ALVEO : New Property Notification!",
+      subject: "AVIDA : New Property Notification!",
       html: emailHtml,
     };
 

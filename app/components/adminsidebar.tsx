@@ -180,7 +180,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ pathname }) => {
       <div className="lg:hidden fixed top-0 left-0 right-0 z-30 flex h-20 items-center justify-between bg-white shadow-sm px-4">
         <Image
           src={LOGO_SRC}
-          alt="ALVEO LOGO"
+          alt="AVIDA LOGO"
           width={152}
           height={126}
           priority
@@ -203,7 +203,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ pathname }) => {
         <div className="p-4 hidden lg:flex justify-center">
           <Image
             src={LOGO_SRC}
-            alt="ALVEO LOGO"
+            alt="AVIDA LOGO"
             width={152}
             height={126}
             priority
@@ -214,7 +214,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ pathname }) => {
         <div className="flex lg:hidden items-center justify-between p-4 border-b">
           <Image
             src={LOGO_SRC}
-            alt="ALVEO LOGO"
+            alt="AVIDA LOGO"
             width={152}
             height={126}
             className="object-contain h-14 w-auto"

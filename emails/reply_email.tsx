@@ -23,17 +23,17 @@ export const ReplyEmail = ({ message, first_name }: ReplyEmailProps) => (
     <Body style={main}>
       <Container style={container}>
         <Img
-          src="https://infinitech-api27.site/logo/dmci-logo-only.png"
+          src="https://infinitech-api27.site/logo/avida-logo-only.png"
           height="80"
-          alt="DMCI Homes Logo"
+          alt="AVIDA Logo"
           style={logo}
         />
 
         <Text style={text}>Good Day, {first_name}</Text>
 
         <Text style={text}>
-          Thank you for reaching out to DMCI Homes. We have received your
-          inquiry and we truly appreciate your interest in our properties.
+          Thank you for reaching out to AVIDA. We have received your inquiry and
+          we truly appreciate your interest in our properties.
         </Text>
 
         <Text style={text}>
@@ -55,14 +55,13 @@ export const ReplyEmail = ({ message, first_name }: ReplyEmailProps) => (
         </Text>
 
         <Text style={text}>
-          Thank you for considering DMCI Homes. We look forward to assisting
-          you.
+          Thank you for considering AVIDA. We look forward to assisting you.
         </Text>
 
         <Hr style={hr} />
 
         <Text style={footer}>
-          © 2025 DMCI Homes. All rights reserved.
+          © 2025 AVIDA. All rights reserved.
           <br />
           Philippines
         </Text>

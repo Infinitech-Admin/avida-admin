@@ -51,9 +51,9 @@ export const NewPropertyEmail = ({
               }}
             >
               <Img
-                alt="DMCI Homes Logo"
+                alt="AVIDA Logo"
                 height="80"
-                src="https://infinitech-api27.site/logo/dmci-logo-only.png"
+                src="https://infinitech-api27.site/logo/avida-logo-only.png"
                 style={{ display: "block", margin: "0 auto" }}
               />
             </td>
@@ -71,7 +71,7 @@ export const NewPropertyEmail = ({
                   margin: "0",
                 }}
               >
-                DMCI HOMES
+                AVIDA
               </Text>
             </td>
           </tr>
@@ -100,21 +100,21 @@ export const NewPropertyEmail = ({
           Stay tuned for our upcoming newsletters, and feel free to reach out if
           you have any questions or specific property preferences.
         </Text>
-        <Button href="https://dmci-agent-website.vercel.app/" style={button}>
+        <Button href="https://staging-avida.vercel.app/" style={button}>
           Visit Our Website
         </Button>
         <Hr style={hr} />
         <Text>
           If you ever wish to unsubscribe, you can do so by clicking{" "}
           <Link
-            href={`https://dmci-agent-website.vercel.app//subscription?email=${email}`}
+            href={`https://staging-avida.vercel.app/subscription?email=${email}`}
           >
             here
           </Link>
         </Text>
         <Hr style={hr} />
         <Text style={footer}>
-          © 2025 DMCI Homes. All rights reserved.
+          © 2025 AVIDA. All rights reserved.
           <br />
           Philippines
         </Text>

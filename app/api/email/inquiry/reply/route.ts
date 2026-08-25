@@ -25,7 +25,7 @@ export async function POST(req: Request) {
   const mailOptions = {
     from: process.env.GMAIL_USER,
     to: email,
-    subject: "ALVEO: Inquiry Reply",
+    subject: "AVIDA: Inquiry Reply",
     html: emailHtml,
   };
 

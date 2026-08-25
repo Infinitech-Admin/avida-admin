@@ -5,7 +5,7 @@ import { Poppins } from "next/font/google";
 
 // Define metadata for the layout
 export const metadata: Metadata = {
-  title: "ALVEO Homes | Admin",
+  title: "AVIDA Homes | Admin",
   description: "Lerom Ipsum.",
 };
 

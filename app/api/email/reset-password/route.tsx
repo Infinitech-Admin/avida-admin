@@ -25,7 +25,7 @@ export async function POST(req: Request) {
   const mailOptions = {
     from: process.env.GMAIL_USER,
     to: email,
-    subject: "ALVEO : Reset Password",
+    subject: "AVIDA : Reset Password",
     html: emailHtml,
   };
 

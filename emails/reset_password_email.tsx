@@ -19,7 +19,7 @@ interface ResetPasswordEmailProps {
 }
 
 export const ResetPasswordEmail = ({
-  resetLink = "https://dmci-admin.vercel.app/auth/reset-password",
+  resetLink = "https://avida-admin.vercel.app/auth/reset-password",
   resetToken,
 }: ResetPasswordEmailProps) => (
   <Html>
@@ -28,18 +28,17 @@ export const ResetPasswordEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Img
-          src="https://infinitech-api27.site/logo/dmci-logo-only.png"
+          src="https://infinitech-api27.site/logo/avida-logo-only.png"
           width="170"
           height="170"
-          alt="DMCI Homes Logo"
+          alt="AVIDA Logo"
           style={logo}
         />
         <Heading style={h1}>Reset Your Password</Heading>
         <Text style={text}>Hello</Text>
         <Text style={text}>
-          We received a request to reset your password for your DMCI Homes
-          account. If you didn't make this request, you can safely ignore this
-          email.
+          We received a request to reset your password for your AVIDA account.
+          If you didn't make this request, you can safely ignore this email.
         </Text>
         <Text style={text}>
           To reset your password, click the button below:
@@ -62,10 +61,10 @@ export const ResetPasswordEmail = ({
           If you have any questions or need further assistance, please don't
           hesitate to contact our support team.
         </Text>
-        <Text style={text}>Thank you for choosing DMCI Homes!</Text>
+        <Text style={text}>Thank you for choosing AVIDA!</Text>
         <Hr style={hr} />
         <Text style={footer}>
-          © 2025 DMCI Homes. All rights reserved.
+          © 2025 AVIDA. All rights reserved.
           <br />
           Philippines
         </Text>

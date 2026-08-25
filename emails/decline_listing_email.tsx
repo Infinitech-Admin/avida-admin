@@ -30,13 +30,13 @@ export const ListingDeclinedEmail = ({
 }: ListingDeclinedEmailProps) => (
   <Html>
     <Head />
-    <Preview>Your listing with DMCI Homes has been declined</Preview>
+    <Preview>Your listing with AVIDA has been declined</Preview>
     <Body style={main}>
       <Container style={container}>
         <Img
-          src="https://infinitech-api27.site/logo/dmci-logo-only.png"
+          src="https://infinitech-api27.site/logo/avida-logo-only.png"
           height="170"
-          alt="DMCI Homes Logo"
+          alt="AVIDA Logo"
           style={logo}
         />
         <Heading style={h1}>Your Listing Has Been Declined</Heading>
@@ -44,8 +44,8 @@ export const ListingDeclinedEmail = ({
           Hello {first_name} {last_name},
         </Text>
         <Text style={text}>
-          Thank you for submitting your listing to DMCI Homes. After careful
-          review, we regret to inform you that your listing has been declined.
+          Thank you for submitting your listing to AVIDA. After careful review,
+          we regret to inform you that your listing has been declined.
         </Text>
         <Text style={text}>
           <strong>Reason for Decline:</strong> {reason}
@@ -66,7 +66,7 @@ export const ListingDeclinedEmail = ({
         </Text>
         <Hr style={hr} />
         <Text style={footer}>
-          © 2025 DMCI Homes. All rights reserved.
+          © 2025 AVIDA. All rights reserved.
           <br />
           Philippines
         </Text>

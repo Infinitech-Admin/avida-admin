@@ -24,20 +24,20 @@ export const ListingApprovalEmail = ({
 }: ListingApprovalEmailProps) => (
   <Html>
     <Head />
-    <Preview>Your listing with DMCI Homes is approved!</Preview>
+    <Preview>Your listing with AVIDA is approved!</Preview>
     <Body style={main}>
       <Container style={container}>
         <Img
-          src="https://infinitech-api27.site/logo/dmci-logo-only.png"
+          src="https://infinitech-api27.site/logo/avida-logo-only.png"
           height="170"
-          alt="DMCI Homes Logo"
+          alt="AVIDA Logo"
           style={logo}
         />
         <Heading style={h1}>Your Listing is Approved!</Heading>
         <Text style={text}>Hello {name},</Text>
         <Text style={text}>
           Congratulations! We're pleased to inform you that your listing has
-          been approved and is now live on DMCI Homes' platform.
+          been approved and is now live on AVIDA' platform.
         </Text>
         {/* <Section style={buttonContainer}>
           <Link style={button} href={`dmcihomes.com/dashboard/${email}`}>
@@ -52,10 +52,10 @@ export const ListingApprovalEmail = ({
           If you have any questions or need further assistance, feel free to
           reach out to our support team.
         </Text>
-        <Text style={text}>Thank you for choosing DMCI Homes!</Text>
+        <Text style={text}>Thank you for choosing AVIDA!</Text>
         <Hr style={hr} />
         <Text style={footer}>
-          © 2025 DMCI Homes. All rights reserved.
+          © 2025 AVIDA. All rights reserved.
           <br />
           Philippines
         </Text>
