@@ -55,6 +55,7 @@ const DashboardInquiryTable: React.FC = () => {
 
   const [detailModalOpen, setDetailModalOpen] = useState(false);
   const [selectedInquiry, setSelectedInquiry] = useState<Category | null>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   useEffect(() => {
     if (data && !error) {
@@ -97,8 +98,43 @@ const DashboardInquiryTable: React.FC = () => {
   };
 
   const handleRowClick = (category: Category) => {
+    setIsEditMode(false);
     setSelectedInquiry(category);
     setDetailModalOpen(true);
+  };
+
+  // This is the actual fix: the edit button previously had no onClick at
+  // all, so nothing happened when it was clicked, on desktop or mobile.
+  const handleEditClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    category: Category,
+  ) => {
+    e.stopPropagation();
+    setIsEditMode(true);
+    setSelectedInquiry(category);
+    setDetailModalOpen(true);
+  };
+
+  const handleSaveInquiry = async (updated: Category) => {
+    const headers = getAuthHeaders();
+    // Match the working update pattern used elsewhere in this app (see
+    // contract updates): POST to the base collection endpoint — no id in
+    // the URL — with `id` and Laravel's `_method: "PUT"` spoofing in the
+    // body. Putting the id in the URL path returned a 405 here, which
+    // means that route shape isn't registered on the backend.
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/inquiries`,
+      {
+        method: "POST",
+        headers: { ...headers, "Content-Type": "application/json" },
+        body: JSON.stringify({ ...updated, _method: "PUT" }),
+      },
+    );
+    if (!res.ok) throw new Error(`Failed to update inquiry (${res.status})`);
+    setCategories((prev) =>
+      prev.map((c) => (c.id === updated.id ? updated : c)),
+    );
+    toast.success("Inquiry updated successfully!");
   };
 
   const capitalize = (s: string) =>
@@ -140,15 +176,21 @@ const DashboardInquiryTable: React.FC = () => {
       renderCell: (category: Category) => (
         <div className="flex gap-2">
           <button
+            type="button"
             className="text-gray-400 hover:text-violet-700 transition-colors"
             aria-label="Edit inquiry"
+            onClick={(e) => handleEditClick(e, category)}
           >
             <LuPenLine size={16} />
           </button>
           <button
+            type="button"
             className="text-gray-400 hover:text-red-600 transition-colors"
             aria-label="Delete inquiry"
-            onClick={() => handleDeleteClick(category.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDeleteClick(category.id);
+            }}
           >
             <LuTrash2 size={16} />
           </button>
@@ -179,8 +221,13 @@ const DashboardInquiryTable: React.FC = () => {
 
       <InquiryDetailModal
         isOpen={detailModalOpen}
-        onClose={() => setDetailModalOpen(false)}
+        onClose={() => {
+          setDetailModalOpen(false);
+          setIsEditMode(false);
+        }}
         inquiry={selectedInquiry}
+        editable={isEditMode}
+        onSave={handleSaveInquiry}
       />
     </div>
   );

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import axios, { AxiosError } from 'axios';
-import toast from 'react-hot-toast';
-import { LuImage, LuX } from 'react-icons/lu';
+import React, { useState, useEffect } from "react";
+import axios, { AxiosError } from "axios";
+import toast from "react-hot-toast";
+import { LuImage, LuX } from "react-icons/lu";
 import {
   Modal,
   ModalContent,
@@ -15,8 +15,8 @@ import {
   Textarea,
   Divider,
   Image,
-} from '@heroui/react';
-import { SlPlus } from 'react-icons/sl';
+} from "@heroui/react";
+import { SlPlus } from "react-icons/sl";
 
 interface AddNewsProps {
   mutate: () => void;
@@ -26,10 +26,10 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    headline: '',
-    url: '',
-    content: '',
-    date: '',
+    headline: "",
+    url: "",
+    content: "",
+    date: "",
     image: null as File | null,
   });
 
@@ -37,7 +37,7 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
 
   useEffect(() => {
     return () => {
-      if (imagePreview?.startsWith('blob:')) {
+      if (imagePreview?.startsWith("blob:")) {
         URL.revokeObjectURL(imagePreview);
       }
     };
@@ -46,7 +46,7 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
 
-    if (name === 'image' && files && files.length > 0) {
+    if (name === "image" && files && files.length > 0) {
       const file = files[0];
       setFormData((prev) => ({ ...prev, image: file }));
       setImagePreview(URL.createObjectURL(file));
@@ -58,8 +58,6 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
   const handleTextareaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, content: e.target.value }));
   };
-  
-  
 
   const handleRemoveImage = () => {
     setFormData((prev) => ({ ...prev, image: null }));
@@ -71,36 +69,37 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
     setLoading(true);
 
     try {
-      const accessToken = typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
+      const accessToken =
+        typeof window !== "undefined" ? sessionStorage.getItem("token") : null;
 
       const headers = {
         Authorization: `Bearer ${accessToken}`,
       };
 
       const formDataToSend = new FormData();
-      formDataToSend.append('headline', formData.headline);
-      formDataToSend.append('url', formData.url);
-      formDataToSend.append('content', formData.content);
-      formDataToSend.append('date', formData.date);
+      formDataToSend.append("headline", formData.headline);
+      formDataToSend.append("url", formData.url);
+      formDataToSend.append("content", formData.content);
+      formDataToSend.append("date", formData.date);
       if (formData.image) {
-        formDataToSend.append('image', formData.image);
+        formDataToSend.append("image", formData.image);
       }
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/articles`,
         formDataToSend,
-        { headers }
+        { headers },
       );
 
       if (response?.data) {
         mutate();
-        toast.success('News added successfully!');
+        toast.success("News added successfully!");
         setIsOpen(false);
         setFormData({
-          headline: '',
-          url: '',
-          content: '',
-          date: '',
+          headline: "",
+          url: "",
+          content: "",
+          date: "",
           image: null,
         });
         setImagePreview(null);
@@ -108,9 +107,10 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
     } catch (error) {
       const axiosError = error as AxiosError;
       const errorMsg =
-        axiosError.response?.data && typeof axiosError.response.data === 'object'
+        axiosError.response?.data &&
+        typeof axiosError.response.data === "object"
           ? (axiosError.response.data as any).message
-          : 'An unexpected error occurred.';
+          : "An unexpected error occurred.";
       toast.error(errorMsg);
     } finally {
       setLoading(false);
@@ -129,7 +129,17 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
         Add News
       </Button>
 
-      <Modal size="4xl" isOpen={isOpen} onOpenChange={() => setIsOpen(false)}>
+      <Modal
+        size="4xl"
+        isOpen={isOpen}
+        onOpenChange={() => setIsOpen(false)}
+        scrollBehavior="inside"
+        classNames={{
+          wrapper: "items-center",
+          base: "m-4 max-h-[85vh] sm:max-h-[90vh] overflow-hidden flex flex-col",
+          body: "overflow-y-auto",
+        }}
+      >
         <ModalContent>
           {(onCloseModal) => (
             <>
@@ -137,10 +147,14 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
                 Add News and Updates
               </ModalHeader>
 
-              <form onSubmit={handleSubmit} encType="multipart/form-data">
+              <form
+                onSubmit={handleSubmit}
+                encType="multipart/form-data"
+                className="flex flex-col overflow-hidden flex-1"
+              >
                 <ModalBody>
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div className="col-span-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="col-span-full">
                       <Input
                         label="Headline"
                         labelPlacement="outside"
@@ -154,7 +168,7 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
                       />
                     </div>
 
-                    <div className="col-span-3">
+                    <div className="sm:col-span-1 lg:col-span-3">
                       <Input
                         label="Link (URL)"
                         labelPlacement="outside"
@@ -168,7 +182,7 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
                       />
                     </div>
 
-                    <div className="col-span-1">
+                    <div className="sm:col-span-1">
                       <Input
                         label="Date"
                         labelPlacement="outside"
@@ -182,7 +196,7 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
                       />
                     </div>
 
-                    <div className="col-span-4">
+                    <div className="col-span-full">
                       <Textarea
                         label="Content"
                         labelPlacement="outside"
@@ -191,25 +205,30 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
                         name="content"
                         placeholder="Enter content"
                         value={formData.content}
-                        onChange={handleTextareaChange} 
+                        onChange={handleTextareaChange}
                         required
                       />
                     </div>
 
                     {/* Image Upload + Preview */}
-                    <div className="col-span-4 flex gap-6">
+                    <div className="col-span-full flex flex-col sm:flex-row gap-4 sm:gap-6">
                       <div
-                        className="flex flex-wrap items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer relative w-1/2 h-48"
+                        className="flex flex-wrap items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 cursor-pointer relative w-full sm:w-1/2 h-40 sm:h-48"
                         onClick={() => {
-                          const fileInput = document.getElementById("file-input") as HTMLInputElement | null;
+                          const fileInput = document.getElementById(
+                            "file-input",
+                          ) as HTMLInputElement | null;
                           if (fileInput) fileInput.click();
                         }}
                       >
-                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500">
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500 w-full px-2">
                           <div className="flex flex-col justify-center items-center text-center">
-                            <LuImage size={72} />
-                            <h1>Click to Upload Image</h1>
-                            <p className="text-sm text-gray-500 mt-2">
+                            <LuImage size={56} className="sm:hidden" />
+                            <LuImage size={72} className="hidden sm:block" />
+                            <h1 className="text-sm sm:text-base">
+                              Click to Upload Image
+                            </h1>
+                            <p className="text-xs sm:text-sm text-gray-500 mt-2">
                               Supported formats: JPEG, PNG, GIF, BMP, TIFF
                             </p>
                           </div>
@@ -225,14 +244,18 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
                       </div>
 
                       {imagePreview && (
-                        <div className="relative">
-                          <Image src={imagePreview} alt="Preview" className="w-full h-48 object-cover rounded" />
+                        <div className="relative w-full sm:w-1/2 h-40 sm:h-48">
+                          <Image
+                            src={imagePreview}
+                            alt="Preview"
+                            className="w-full h-40 sm:h-48 object-cover rounded"
+                          />
                           <Button
                             size="sm"
                             isIconOnly
                             startContent={<LuX />}
                             onPress={handleRemoveImage}
-                            className="absolute -top-2 -right-4 z-10 bg-red-500 text-white rounded-full"
+                            className="absolute -top-2 -right-2 sm:-right-4 z-10 bg-red-500 text-white rounded-full"
                           />
                         </div>
                       )}
@@ -242,13 +265,14 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
 
                 <Divider className="my-4" />
 
-                <ModalFooter>
+                <ModalFooter className="flex-col-reverse sm:flex-row gap-2">
                   <Button
                     size="lg"
                     color="default"
                     variant="light"
                     onPress={() => setIsOpen(false)}
                     isDisabled={loading}
+                    className="w-full sm:w-auto"
                   >
                     Cancel
                   </Button>
@@ -258,6 +282,7 @@ const AddNews: React.FC<AddNewsProps> = ({ mutate }) => {
                     color="primary"
                     isDisabled={loading}
                     isLoading={loading}
+                    className="w-full sm:w-auto"
                   >
                     Add News
                   </Button>

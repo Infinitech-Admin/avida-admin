@@ -131,7 +131,17 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
   };
 
   return (
-    <Modal size="4xl" isOpen={isOpen} onOpenChange={onClose}>
+    <Modal
+      size="4xl"
+      isOpen={isOpen}
+      onOpenChange={onClose}
+      scrollBehavior="inside"
+      classNames={{
+        wrapper: "items-center",
+        base: "m-4 max-h-[85vh] sm:max-h-[90vh] overflow-hidden flex flex-col",
+        body: "overflow-y-auto",
+      }}
+    >
       <ModalContent>
         {(onCloseModal) => (
           <>
@@ -139,10 +149,14 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
               Update News and Updates
             </ModalHeader>
 
-            <form onSubmit={handleUpdateSubmit} encType="multipart/form-data">
+            <form
+              onSubmit={handleUpdateSubmit}
+              encType="multipart/form-data"
+              className="flex flex-col overflow-hidden flex-1"
+            >
               <ModalBody>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <div className="col-span-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="col-span-full">
                     <Input
                       label="Headline"
                       labelPlacement="outside"
@@ -158,7 +172,7 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
                     />
                   </div>
 
-                  <div className="col-span-3">
+                  <div className="sm:col-span-1 lg:col-span-3">
                     <Input
                       isRequired
                       label="Link (URL)"
@@ -175,7 +189,7 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
                     />
                   </div>
 
-                  <div className="col-span-1">
+                  <div className="sm:col-span-1">
                     <Input
                       label="Date"
                       labelPlacement="outside"
@@ -190,7 +204,7 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
                     />
                   </div>
 
-                  <div className="col-span-4">
+                  <div className="col-span-full">
                     <Textarea
                       label="Content"
                       labelPlacement="outside"
@@ -206,9 +220,9 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
                   </div>
 
                   {/* Custom Image Upload UI */}
-                  <div className="col-span-4 flex gap-6">
+                  <div className="col-span-full flex flex-col sm:flex-row gap-4 sm:gap-6">
                     <div
-                      className="flex flex-wrap items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer relative w-1/2 h-48"
+                      className="flex flex-wrap items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 cursor-pointer relative w-full sm:w-1/2 h-40 sm:h-48"
                       onClick={() => {
                         const fileInput = document.getElementById(
                           "file-input",
@@ -216,11 +230,14 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
                         if (fileInput) fileInput.click();
                       }}
                     >
-                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500">
+                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500 w-full px-2">
                         <div className="flex flex-col justify-center items-center text-center">
-                          <LuImage size={72} />
-                          <h1>Click to Upload Image</h1>
-                          <p className="text-sm text-gray-500 mt-2">
+                          <LuImage size={56} className="sm:hidden" />
+                          <LuImage size={72} className="hidden sm:block" />
+                          <h1 className="text-sm sm:text-base">
+                            Click to Upload Image
+                          </h1>
+                          <p className="text-xs sm:text-sm text-gray-500 mt-2">
                             Supported formats: JPEG, PNG, GIF, BMP, TIFF
                           </p>
                         </div>
@@ -236,7 +253,7 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
                     </div>
 
                     {imagePreview && (
-                      <div className="relative">
+                      <div className="relative w-full sm:w-1/2 h-40 sm:h-48">
                         <Image
                           src={
                             typeof imagePreview === "string"
@@ -244,7 +261,7 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
                               : URL.createObjectURL(imagePreview)
                           }
                           alt="Preview"
-                          className="w-full h-48 object-cover rounded"
+                          className="w-full h-40 sm:h-48 object-cover rounded"
                         />
                       </div>
                     )}
@@ -254,13 +271,14 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
 
               <Divider className="my-4" />
 
-              <ModalFooter>
+              <ModalFooter className="flex-col-reverse sm:flex-row gap-2">
                 <Button
                   size="lg"
                   color="default"
                   variant="light"
                   onPress={onCloseModal}
                   isDisabled={loading}
+                  className="w-full sm:w-auto"
                 >
                   Cancel
                 </Button>
@@ -270,6 +288,7 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
                   type="submit"
                   color="primary"
                   isDisabled={loading}
+                  className="w-full sm:w-auto"
                 >
                   Save Changes
                 </Button>

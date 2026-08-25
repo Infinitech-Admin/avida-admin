@@ -7,7 +7,6 @@ import Link from "next/link";
 import "photoswipe/dist/photoswipe.css";
 import { Gallery, Item } from "react-photoswipe-gallery";
 
-import DataTable from "@/app/components/datatable";
 import DeleteConfirmationModal from "@/app/components/modal/deletemodal";
 import AddNews from "./addmodal";
 import UpdateNews from "./updatemodal";
@@ -19,7 +18,7 @@ import { RiArrowDownLine } from "react-icons/ri";
 import { LuPenLine, LuPenSquare, LuTrash2 } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 import { FaFileAlt, FaFilePdf } from "react-icons/fa";
-import TableData from "@/app/components/tabledata";
+import DashboardResponsiveTable from "@/app/components/dashboardresponsivetable";
 import { Button } from "@heroui/button";
 
 type Category = {
@@ -55,14 +54,11 @@ const CareerTable: React.FC = () => {
 
     return await res.json();
   };
-  const { data, error, mutate } = useSWR(
+  const { data, error, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/api/applications`,
     fetcherWithAuth,
   );
   const [categories, setCategories] = useState<Category[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [categoryToUpdate, setCategoryToUpdate] = useState<Category | null>(
     null,
@@ -70,12 +66,10 @@ const CareerTable: React.FC = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
   const [deleteBtnLoading, setDeleteBtnLoading] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (data && !error) {
       setCategories(data.records);
-      setIsLoading(false);
     }
   }, [data, error]);
 
@@ -236,22 +230,16 @@ const CareerTable: React.FC = () => {
 
   return (
     <div className="p-4">
-      {isLoading ? (
-        <div className="animate-pulse space-y-4">
-          {[...Array(itemsPerPage)].map((_, index) => (
-            <div key={index} className="h-10 bg-gray-300 rounded-lg"></div>
-          ))}
-        </div>
-      ) : (
-        <TableData
-          filter={true}
-          label="APPLICATION"
-          description="Manage and review all applicant submissions."
-          columns={columns}
-          data={categories}
-          statusOptions={statusOptions}
-        />
-      )}
+      <DashboardResponsiveTable
+        filter={true}
+        label="APPLICATION"
+        description="Manage and review all applicant submissions."
+        columns={columns}
+        data={categories}
+        statusOptions={statusOptions}
+        loading={isLoading}
+        searchKeys={["name", "position", "email", "phone", "address"]}
+      />
 
       <DeleteConfirmationModal
         isOpen={deleteModalOpen}

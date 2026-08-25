@@ -205,7 +205,7 @@ const EditForm = ({ property, properties }: Props) => {
   };
 
   const PropertyDetails = (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <div className="col-span-full py-4">
         <h1 className="text-blue-700 font-bold text-xl uppercase">
           Property Details
@@ -241,7 +241,7 @@ const EditForm = ({ property, properties }: Props) => {
         </Autocomplete>
       </div>
 
-      <div className="col-span-2">
+      <div className="sm:col-span-2 lg:col-span-2">
         <Input
           value={formData.property_location || ""}
           isRequired
@@ -313,7 +313,7 @@ const EditForm = ({ property, properties }: Props) => {
         />
       </div>
 
-      <div className="col-span-2">
+      <div className="sm:col-span-2 lg:col-span-2">
         <Input
           value={formData.property_building || ""}
           isRequired
@@ -396,7 +396,7 @@ const EditForm = ({ property, properties }: Props) => {
       </p>
       <Divider />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4">
         <Select
           isRequired
           size="lg"
@@ -422,7 +422,7 @@ const EditForm = ({ property, properties }: Props) => {
       {(formData.property_furnishing_status === "Semi-Furnished" ||
         formData.property_furnishing_status === "Fully Furnished") && (
         <>
-          <div className="flex items-center gap-3 mt-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-6">
             <Input
               size="lg"
               placeholder="Enter item (e.g., Refrigerator)"
@@ -432,6 +432,7 @@ const EditForm = ({ property, properties }: Props) => {
             <Button
               size="lg"
               color="primary"
+              className="w-full sm:w-auto"
               onPress={() => {
                 if (furnishingInput.trim()) {
                   setFormData({
@@ -449,7 +450,7 @@ const EditForm = ({ property, properties }: Props) => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
             {(formData.property_furnishing_items || []).map(
               (item: string, index: number) => (
                 <div
@@ -490,7 +491,7 @@ const EditForm = ({ property, properties }: Props) => {
         to potential buyers or renters.
       </p>
       <Divider />
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 py-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-4">
         {amenitiesData.map((item: any, index: number) => (
           <Checkbox
             key={index}
@@ -514,7 +515,7 @@ const EditForm = ({ property, properties }: Props) => {
         of the property.
       </p>
       <Divider />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 py-4">
         <div>
           <Select
             isRequired
@@ -575,9 +576,9 @@ const EditForm = ({ property, properties }: Props) => {
           </Select>
         </div>
         <div className="col-span-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div
-              className="flex flex-wrap items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer relative w-full h-72"
+              className="flex flex-wrap items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer relative w-full h-56 sm:h-72"
               onClick={() => {
                 const fileInput = document.getElementById(
                   "file-input",
@@ -587,14 +588,17 @@ const EditForm = ({ property, properties }: Props) => {
                 }
               }}
             >
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500">
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500 w-full px-2">
                 <div className="flex flex-col justify-center items-center text-center">
                   <div>
-                    <LuUpload size={72} />
+                    <LuUpload size={56} className="sm:hidden" />
+                    <LuUpload size={72} className="hidden sm:block" />
                   </div>
                   <div>
-                    <h1>Click to Upload Images</h1>
-                    <p className="text-sm text-gray-500 mt-2">
+                    <h1 className="text-sm sm:text-base">
+                      Click to Upload Images
+                    </h1>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-2">
                       Supported formats: JPEG, PNG, GIF, BMP, TIFF, and more.
                     </p>
                   </div>
@@ -610,24 +614,27 @@ const EditForm = ({ property, properties }: Props) => {
             </div>
             <div>
               {planPreviews === null ? (
-                <div className="flex flex-wrap items-center justify-center bg-gray-200 rounded-lg p-6  relative w-full h-72">
+                <div className="flex flex-wrap items-center justify-center bg-gray-200 rounded-lg p-6 relative w-full h-56 sm:h-72">
                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500">
                     <div className="flex flex-col justify-center items-center text-center">
                       <div>
-                        <LuImage size={72} />
+                        <LuImage size={56} className="sm:hidden" />
+                        <LuImage size={72} className="hidden sm:block" />
                       </div>
                       <div>
-                        <h1>No Selected Image</h1>
+                        <h1 className="text-sm sm:text-base">
+                          No Selected Image
+                        </h1>
                       </div>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="flex w-full h-72 bg-gray-200 justify-center items-center">
+                <div className="flex w-full h-56 sm:h-72 bg-gray-200 justify-center items-center">
                   <Image
                     src={planPreviews}
                     alt={`preview`}
-                    className="w-full max-h-72 object-cover object-center py-4 rounded-lg"
+                    className="w-full max-h-56 sm:max-h-72 object-cover object-center py-4 rounded-lg"
                   />
                 </div>
               )}
@@ -641,7 +648,7 @@ const EditForm = ({ property, properties }: Props) => {
   const PropertyImages = (
     <div className="flex flex-col gap-6">
       <div
-        className="flex flex-wrap items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer relative w-full h-48"
+        className="flex flex-wrap items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 cursor-pointer relative w-full h-40 sm:h-48"
         onClick={() => {
           const fileInput = document.getElementById(
             "file-input",
@@ -651,11 +658,12 @@ const EditForm = ({ property, properties }: Props) => {
           }
         }}
       >
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500 w-full px-2">
           <div className="flex flex-col justify-center items-center text-center">
-            <LuImage size={72} />
-            <h1>Click to Upload Images</h1>
-            <p className="text-sm text-gray-500 mt-2">
+            <LuImage size={56} className="sm:hidden" />
+            <LuImage size={72} className="hidden sm:block" />
+            <h1 className="text-sm sm:text-base">Click to Upload Images</h1>
+            <p className="text-xs sm:text-sm text-gray-500 mt-2">
               Supported formats: JPEG, PNG, GIF, BMP, TIFF, and more.
             </p>
           </div>
@@ -669,9 +677,9 @@ const EditForm = ({ property, properties }: Props) => {
         />
       </div>
 
-      <div className="flex flex-wrap gap-6">
+      <div className="flex flex-wrap gap-4 sm:gap-6">
         {imagePreviews.map((preview, index) => (
-          <div key={index} className="relative w-32 h-32">
+          <div key={index} className="relative w-24 h-24 sm:w-32 sm:h-32">
             <img
               src={preview}
               alt={`preview-${index}`}
@@ -691,12 +699,12 @@ const EditForm = ({ property, properties }: Props) => {
             <CardHeader>
               <div className="flex items-center gap-2">
                 <div
-                  className="bg-blue-100 p-2 rounded-full text-blue-800 cursor-pointer"
+                  className="bg-blue-100 p-2 rounded-full text-blue-800 cursor-pointer shrink-0"
                   onClick={() => router.push("/admin/properties")}
                 >
                   <LuArrowLeft />
                 </div>
-                <h1 className="font-semibold text-2xl text-blue-800 uppercase">
+                <h1 className="font-semibold text-lg sm:text-2xl text-blue-800 uppercase">
                   Edit properties
                 </h1>
               </div>
@@ -712,15 +720,15 @@ const EditForm = ({ property, properties }: Props) => {
               </>
             </CardBody>
             <CardFooter>
-              <div className="flex justify-end gap-4">
+              <div className="flex flex-col sm:flex-row sm:justify-end gap-3 w-full">
                 {activeStep > 0 && (
                   <Button
                     startContent={<LuArrowLeft size={18} />}
                     size="lg"
                     onPress={() => setActiveStep((prev) => prev - 1)}
-                    className={
+                    className={`w-full sm:w-auto ${
                       activeStep === 0 ? "opacity-50 cursor-not-allowed" : ""
-                    }
+                    }`}
                   >
                     Back
                   </Button>
@@ -730,6 +738,7 @@ const EditForm = ({ property, properties }: Props) => {
                     endContent={<LuArrowRight size={18} />}
                     size="lg"
                     color="primary"
+                    className="w-full sm:w-auto"
                     onPress={() => setActiveStep((prev) => prev + 1)}
                   >
                     Next
@@ -740,6 +749,7 @@ const EditForm = ({ property, properties }: Props) => {
                     endContent={<LuArrowRight size={18} />}
                     size="lg"
                     color="primary"
+                    className="w-full sm:w-auto"
                     onPress={handleSubmit}
                   >
                     Submit

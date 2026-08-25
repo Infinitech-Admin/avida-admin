@@ -1,15 +1,18 @@
-import React from 'react'
-import NewsTable from './newstb'
+import React from "react";
+import { Viewport } from "next";
+import NewsTable from "./newstb";
 
-
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 const page = () => {
   return (
     <div className="container">
       <NewsTable />
     </div>
+  );
+};
 
-  )
-}
-
-export default page
+export default page;

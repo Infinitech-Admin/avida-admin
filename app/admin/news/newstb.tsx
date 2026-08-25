@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 import "lightbox2/dist/css/lightbox.min.css";
 import { useRouter } from "next/navigation";
 
-import DataTable from "@/app/components/datatable";
 import DeleteConfirmationModal from "@/app/components/modal/deletemodal";
 import AddNews from "./addmodal";
 import UpdateNews from "./updatemodal";
@@ -16,7 +15,7 @@ import { getAuthHeaders } from "@/app/utility/auth";
 import { LuPenLine, LuPenSquare, LuTrash2 } from "react-icons/lu";
 import { AiOutlineDelete } from "react-icons/ai";
 import SeeMoreText from "@/app/components/seemoretext";
-import TableData from "@/app/components/tabledata";
+import DashboardResponsiveTable from "@/app/components/dashboardresponsivetable";
 import { Button } from "@heroui/button";
 import { Image } from "@heroui/react";
 
@@ -55,27 +54,24 @@ const NewsTable: React.FC = () => {
   };
 
   // Fetch data using SWR
-  const { data, error, mutate } = useSWR(
+  const { data, error, mutate, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/api/articles`,
     fetcherWithAuth,
   );
 
   const [categories, setCategories] = useState<any[]>([]);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [categoryToUpdate, setCategoryToUpdate] = useState<Category | null>(
     null,
   );
-  const [isLoading, setIsLoading] = useState(true);
   const [deleteBtnLoading, setDeleteBtnLoading] = useState(false);
 
   // Update categories when data changes
   useEffect(() => {
     if (data && data.records) {
       setCategories(data.records);
-      setIsLoading(false);
     }
   }, [data, error]);
 
@@ -143,7 +139,7 @@ const NewsTable: React.FC = () => {
       key: "headline",
       label: "Headline",
       renderCell: (category: Category) => (
-        <div className="min-w-[300px]">{category.headline}</div>
+        <div className="min-w-0 md:min-w-[300px]">{category.headline}</div>
       ),
     },
 
@@ -151,7 +147,7 @@ const NewsTable: React.FC = () => {
       key: "content",
       label: "Content",
       renderCell: (category: Category) => (
-        <div className="w-[300px] lg:w-[500px]">
+        <div className="w-full md:w-[300px] lg:w-[500px]">
           <SeeMoreText text={category.content || "No message"} />
         </div>
       ),
@@ -221,22 +217,15 @@ const NewsTable: React.FC = () => {
         </div>
       </div>
 
-      {isLoading ? (
-        <div className="animate-pulse space-y-4">
-          {[...Array(itemsPerPage)].map((_, index) => (
-            <div key={index} className="h-10 bg-gray-300 rounded-lg"></div>
-          ))}
-        </div>
-      ) : (
-        <TableData
-          filter={true}
-          label="NEWS & UPDATES"
-          description="Manage and publish news articles and blog posts."
-          columns={columns}
-          data={categories}
-          hasStatusFilter={false}
-        />
-      )}
+      <DashboardResponsiveTable
+        filter={true}
+        label="NEWS & UPDATES"
+        description="Manage and publish news articles and blog posts."
+        columns={columns}
+        data={categories}
+        loading={isLoading}
+        searchKeys={["headline", "content"]}
+      />
 
       {/* Delete Modal */}
       <DeleteConfirmationModal

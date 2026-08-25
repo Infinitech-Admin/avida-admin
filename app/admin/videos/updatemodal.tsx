@@ -92,66 +92,79 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
     }
   };
 
-const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  setLoading(true);
+  const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    const token = sessionStorage.getItem("token");
-    const formDataToSend = new FormData();
+    try {
+      const token = sessionStorage.getItem("token");
+      const formDataToSend = new FormData();
 
-    formDataToSend.append("_method", "PUT");
-    formDataToSend.append("id", initialData.id);
-    formDataToSend.append("user_id", initialData.user_id);
-    formDataToSend.append("name", formData.name);
+      formDataToSend.append("_method", "PUT");
+      formDataToSend.append("id", initialData.id);
+      formDataToSend.append("user_id", initialData.user_id);
+      formDataToSend.append("name", formData.name);
 
-    if (formData.video instanceof File) {
-      formDataToSend.append("video", formData.video);
-    }
-
-    if (formData.thumbnail instanceof File) {
-      formDataToSend.append("thumbnail", formData.thumbnail);
-    }
-
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/videos`,
-      formDataToSend,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
+      if (formData.video instanceof File) {
+        formDataToSend.append("video", formData.video);
       }
-    );
 
-    if (response?.data) {
-      mutate();
-      toast.success("Video updated successfully!");
-      onClose();
+      if (formData.thumbnail instanceof File) {
+        formDataToSend.append("thumbnail", formData.thumbnail);
+      }
 
-      // Auto refresh page after successful update
-      window.location.reload();
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/videos`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+
+      if (response?.data) {
+        mutate();
+        toast.success("Video updated successfully!");
+        onClose();
+
+        // Auto refresh page after successful update
+        window.location.reload();
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      const errorMsg =
+        axiosError.response?.data &&
+        typeof axiosError.response.data === "object"
+          ? (axiosError.response.data as any).message
+          : "An unexpected error occurred.";
+      setErrorMessage(errorMsg);
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    const axiosError = error as AxiosError;
-    const errorMsg =
-      axiosError.response?.data &&
-      typeof axiosError.response.data === "object"
-        ? (axiosError.response.data as any).message
-        : "An unexpected error occurred.";
-    setErrorMessage(errorMsg);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
     <div>
-      <Modal size="4xl" isOpen={true} onClose={onClose}>
+      <Modal
+        size="4xl"
+        isOpen={true}
+        onClose={onClose}
+        scrollBehavior="inside"
+        classNames={{
+          wrapper: "items-center",
+          base: "m-4 max-h-[85vh] sm:max-h-[90vh] overflow-hidden flex flex-col",
+          body: "overflow-y-auto",
+        }}
+      >
         <ModalContent>
           <ModalHeader>Update Video</ModalHeader>
-          <form onSubmit={handleUpdateSubmit} encType="multipart/form-data">
+          <form
+            onSubmit={handleUpdateSubmit}
+            encType="multipart/form-data"
+            className="flex flex-col overflow-hidden flex-1"
+          >
             <ModalBody>
               <div className="flex flex-col gap-4">
                 <div>
@@ -171,21 +184,24 @@ const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 </div>
 
                 {/* Video Upload */}
-                <div className="flex flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <div
-                    className="flex flex-wrap items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer relative w-1/2 h-48"
+                    className="flex flex-wrap items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 cursor-pointer relative w-full sm:w-1/2 h-40 sm:h-48"
                     onClick={() => {
                       const fileInput = document.getElementById(
-                        "video-input"
+                        "video-input",
                       ) as HTMLInputElement | null;
                       if (fileInput) fileInput.click();
                     }}
                   >
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500">
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500 w-full px-2">
                       <div className="flex flex-col justify-center items-center text-center">
-                        <BiVideoPlus size={72} />
-                        <h1>Click to Upload Video</h1>
-                        <p className="text-sm text-gray-500 mt-2">
+                        <BiVideoPlus size={56} className="sm:hidden" />
+                        <BiVideoPlus size={72} className="hidden sm:block" />
+                        <h1 className="text-sm sm:text-base">
+                          Click to Upload Video
+                        </h1>
+                        <p className="text-xs sm:text-sm text-gray-500 mt-2">
                           Supported formats: MP4, MKV, AVI, WebM
                         </p>
                       </div>
@@ -200,11 +216,11 @@ const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                     />
                   </div>
                   {videoPreview && (
-                    <div className="relative w-1/2 h-48">
+                    <div className="relative w-full sm:w-1/2 h-40 sm:h-48">
                       <video
                         key={videoPreview} // important: forces refresh
                         controls
-                        className="w-full h-48 object-cover rounded"
+                        className="w-full h-40 sm:h-48 object-cover rounded"
                       >
                         <source
                           src={videoPreview}
@@ -221,21 +237,24 @@ const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 </div>
 
                 {/* Thumbnail Upload */}
-                <div className="flex flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <div
-                    className="flex flex-wrap items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer relative w-1/2 h-48"
+                    className="flex flex-wrap items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 cursor-pointer relative w-full sm:w-1/2 h-40 sm:h-48"
                     onClick={() => {
                       const fileInput = document.getElementById(
-                        "thumbnail-input"
+                        "thumbnail-input",
                       ) as HTMLInputElement | null;
                       if (fileInput) fileInput.click();
                     }}
                   >
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500">
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500 w-full px-2">
                       <div className="flex flex-col justify-center items-center text-center">
-                        <LuImage size={72} />
-                        <h1>Click to Upload Thumbnail</h1>
-                        <p className="text-sm text-gray-500 mt-2">
+                        <LuImage size={56} className="sm:hidden" />
+                        <LuImage size={72} className="hidden sm:block" />
+                        <h1 className="text-sm sm:text-base">
+                          Click to Upload Thumbnail
+                        </h1>
+                        <p className="text-xs sm:text-sm text-gray-500 mt-2">
                           Supported formats: JPEG, PNG, GIF
                         </p>
                       </div>
@@ -250,11 +269,11 @@ const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                     />
                   </div>
                   {thumbnailPreview && (
-                    <div className="relative w-1/2 h-48">
+                    <div className="relative w-full sm:w-1/2 h-40 sm:h-48">
                       <Image
                         src={thumbnailPreview}
                         alt="Thumbnail Preview"
-                        className="w-full h-48 object-cover rounded"
+                        className="w-full h-40 sm:h-48 object-cover rounded"
                       />
                     </div>
                   )}
@@ -268,8 +287,13 @@ const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
             <Divider className="my-4" />
 
-            <ModalFooter>
-              <Button variant="light" onPress={onClose} disabled={loading}>
+            <ModalFooter className="flex-col-reverse sm:flex-row gap-2">
+              <Button
+                variant="light"
+                onPress={onClose}
+                disabled={loading}
+                className="w-full sm:w-auto"
+              >
                 Cancel
               </Button>
               <Button
@@ -277,6 +301,7 @@ const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 size="lg"
                 type="submit"
                 color="primary"
+                className="w-full sm:w-auto"
               >
                 Save Changes
               </Button>

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useState, useRef, useEffect } from 'react';
-import axios, { AxiosError } from 'axios';
-import toast from 'react-hot-toast';
+import React, { useState, useRef, useEffect } from "react";
+import axios, { AxiosError } from "axios";
+import toast from "react-hot-toast";
 import {
   Modal,
   ModalContent,
@@ -12,10 +12,11 @@ import {
   Button,
   Input,
   Image,
-} from '@heroui/react';
-import { SlPlus } from 'react-icons/sl';
-import { LuImage, LuX } from 'react-icons/lu';
-import { BiVideoPlus } from 'react-icons/bi';
+  Divider,
+} from "@heroui/react";
+import { SlPlus } from "react-icons/sl";
+import { LuImage, LuX } from "react-icons/lu";
+import { BiVideoPlus } from "react-icons/bi";
 
 interface AddModalProps {
   mutate: () => void;
@@ -26,7 +27,7 @@ const AddModal: React.FC<AddModalProps> = ({ mutate }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const [formData, setFormData] = useState({
-    name: '',
+    name: "",
     video: null as File | null,
     thumbnail: null as File | null,
   });
@@ -44,7 +45,7 @@ const AddModal: React.FC<AddModalProps> = ({ mutate }) => {
     if (files && files.length > 0) {
       const file = files[0];
 
-      if (name === 'video') {
+      if (name === "video") {
         if (videoObjectUrl) {
           URL.revokeObjectURL(videoObjectUrl);
         }
@@ -52,7 +53,7 @@ const AddModal: React.FC<AddModalProps> = ({ mutate }) => {
         setFormData((prevState) => ({ ...prevState, video: file }));
         setVideoPreview(url);
         setVideoObjectUrl(url);
-      } else if (name === 'thumbnail') {
+      } else if (name === "thumbnail") {
         if (imageObjectUrl) {
           URL.revokeObjectURL(imageObjectUrl);
         }
@@ -87,34 +88,34 @@ const AddModal: React.FC<AddModalProps> = ({ mutate }) => {
     setLoading(true);
 
     try {
-      const token = sessionStorage.getItem('token');
-      const user_id = sessionStorage.getItem('user_id');
+      const token = sessionStorage.getItem("token");
+      const user_id = sessionStorage.getItem("user_id");
       const headers = {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       };
 
       const data = new FormData();
       if (user_id) {
-        data.append('user_id', user_id);
+        data.append("user_id", user_id);
       }
-      data.append('name', formData.name);
+      data.append("name", formData.name);
       if (formData.video) {
-        data.append('video', formData.video);
+        data.append("video", formData.video);
       }
       if (formData.thumbnail) {
-        data.append('thumbnail', formData.thumbnail);
+        data.append("thumbnail", formData.thumbnail);
       }
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/videos`,
         data,
-        { headers }
+        { headers },
       );
 
       if (response?.data) {
         setFormData({
-          name: '',
+          name: "",
           video: null,
           thumbnail: null,
         });
@@ -122,14 +123,15 @@ const AddModal: React.FC<AddModalProps> = ({ mutate }) => {
         handleRemoveImage();
         mutate();
         setModalOpen(false);
-        toast.success('Video added successfully!');
+        toast.success("Video added successfully!");
       }
     } catch (error) {
       const axiosError = error as AxiosError;
       const errorMsg =
-        axiosError.response?.data && typeof axiosError.response.data === 'object'
+        axiosError.response?.data &&
+        typeof axiosError.response.data === "object"
           ? (axiosError.response.data as any).message
-          : 'An unexpected error occurred.';
+          : "An unexpected error occurred.";
       toast.error(errorMsg);
     } finally {
       setLoading(false);
@@ -155,10 +157,24 @@ const AddModal: React.FC<AddModalProps> = ({ mutate }) => {
         Add Video
       </Button>
 
-      <Modal size="4xl" isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+      <Modal
+        size="4xl"
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        scrollBehavior="inside"
+        classNames={{
+          wrapper: "items-center",
+          base: "m-4 max-h-[85vh] sm:max-h-[90vh] overflow-hidden flex flex-col",
+          body: "overflow-y-auto",
+        }}
+      >
         <ModalContent>
           <ModalHeader>Add Video</ModalHeader>
-          <form onSubmit={handleAddSubmit} encType="multipart/form-data">
+          <form
+            onSubmit={handleAddSubmit}
+            encType="multipart/form-data"
+            className="flex flex-col overflow-hidden flex-1"
+          >
             <ModalBody>
               <div className="flex flex-col gap-4">
                 {/* Name Input */}
@@ -173,27 +189,34 @@ const AddModal: React.FC<AddModalProps> = ({ mutate }) => {
                   name="name"
                   placeholder="Enter name"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   required
                 />
 
                 {/* Video Upload & Preview */}
-                <div className="flex flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
                   {/* Upload */}
                   <div
-                    className="flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer relative w-1/2 h-48"
+                    className="flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 cursor-pointer relative w-full sm:w-1/2 h-40 sm:h-48"
                     onClick={() => {
                       if (videoInputRef.current) {
-                        videoInputRef.current.value = '';
+                        videoInputRef.current.value = "";
                         videoInputRef.current.click();
                       }
                     }}
                   >
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500">
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500 w-full px-2">
                       <div className="flex flex-col justify-center items-center text-center">
-                        <BiVideoPlus size={72} />
-                        <h1>Click to Upload Video</h1>
-                        <p className="text-sm text-gray-500 mt-2">Supported: MP4, WebM, MOV</p>
+                        <BiVideoPlus size={56} className="sm:hidden" />
+                        <BiVideoPlus size={72} className="hidden sm:block" />
+                        <h1 className="text-sm sm:text-base">
+                          Click to Upload Video
+                        </h1>
+                        <p className="text-xs sm:text-sm text-gray-500 mt-2">
+                          Supported: MP4, WebM, MOV
+                        </p>
                       </div>
                     </div>
                     <input
@@ -209,8 +232,11 @@ const AddModal: React.FC<AddModalProps> = ({ mutate }) => {
 
                   {/* Preview */}
                   {videoPreview && (
-                    <div className="relative w-1/2 h-48">
-                      <video className="w-full h-48 object-cover rounded" controls>
+                    <div className="relative w-full sm:w-1/2 h-40 sm:h-48">
+                      <video
+                        className="w-full h-40 sm:h-48 object-cover rounded"
+                        controls
+                      >
                         <source src={videoPreview} type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
@@ -226,22 +252,25 @@ const AddModal: React.FC<AddModalProps> = ({ mutate }) => {
                 </div>
 
                 {/* Thumbnail Upload & Preview */}
-                <div className="flex flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
                   {/* Upload */}
                   <div
-                    className="flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer relative w-1/2 h-48"
+                    className="flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 cursor-pointer relative w-full sm:w-1/2 h-40 sm:h-48"
                     onClick={() => {
                       if (thumbnailInputRef.current) {
-                        thumbnailInputRef.current.value = '';
+                        thumbnailInputRef.current.value = "";
                         thumbnailInputRef.current.click();
                       }
                     }}
                   >
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500">
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500 w-full px-2">
                       <div className="flex flex-col justify-center items-center text-center">
-                        <LuImage size={72} />
-                        <h1>Click to Upload Thumbnail</h1>
-                        <p className="text-sm text-gray-500 mt-2">
+                        <LuImage size={56} className="sm:hidden" />
+                        <LuImage size={72} className="hidden sm:block" />
+                        <h1 className="text-sm sm:text-base">
+                          Click to Upload Thumbnail
+                        </h1>
+                        <p className="text-xs sm:text-sm text-gray-500 mt-2">
                           Supported formats: JPEG, PNG, GIF, BMP, TIFF
                         </p>
                       </div>
@@ -259,11 +288,11 @@ const AddModal: React.FC<AddModalProps> = ({ mutate }) => {
 
                   {/* Preview */}
                   {imagePreview && (
-                    <div className="relative w-1/2 h-48">
+                    <div className="relative w-full sm:w-1/2 h-40 sm:h-48">
                       <Image
                         src={imagePreview}
                         alt="Thumbnail Preview"
-                        className="w-full h-48 object-cover rounded"
+                        className="w-full h-40 sm:h-48 object-cover rounded"
                       />
                       <Button
                         size="sm"
@@ -278,16 +307,25 @@ const AddModal: React.FC<AddModalProps> = ({ mutate }) => {
               </div>
             </ModalBody>
 
-            <ModalFooter>
+            <Divider className="my-4" />
+
+            <ModalFooter className="flex-col-reverse sm:flex-row gap-2">
               <Button
                 size="lg"
                 variant="light"
                 onPress={() => setModalOpen(false)}
                 disabled={loading}
+                className="w-full sm:w-auto"
               >
                 Cancel
               </Button>
-              <Button isLoading={loading} size="lg" type="submit" color="primary">
+              <Button
+                isLoading={loading}
+                size="lg"
+                type="submit"
+                color="primary"
+                className="w-full sm:w-auto"
+              >
                 Add Video
               </Button>
             </ModalFooter>

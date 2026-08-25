@@ -9,7 +9,7 @@ import UpdateQuestion from "./updatemodal";
 import { getAuthHeaders } from "@/app/utility/auth";
 import { LuPenSquare, LuTrash2 } from "react-icons/lu";
 import { useRouter } from "next/navigation";
-import TableData from "@/app/components/tabledata";
+import DashboardResponsiveTable from "@/app/components/dashboardresponsivetable";
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/react";
 
@@ -44,27 +44,22 @@ const QuestionTable: React.FC = () => {
 
     return await res.json();
   };
-  const { data, error, mutate } = useSWR(
+  const { data, error, mutate, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/api/testimonials`,
-    fetcherWithAuth
+    fetcherWithAuth,
   );
   const [categories, setCategories] = useState<Category[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [categoryToUpdate, setCategoryToUpdate] = useState<Category | null>(
-    null
+    null,
   );
-  const [isLoading, setIsLoading] = useState(true);
   const [deleteBtnLoading, setDeleteBtnLoading] = useState(false);
 
   useEffect(() => {
     if (data && !error) {
       setCategories(data.records);
-      setIsLoading(false);
     }
   }, [data, error]);
 
@@ -94,10 +89,10 @@ const QuestionTable: React.FC = () => {
         {
           method: "DELETE",
           headers: headers,
-        }
+        },
       );
       setCategories((prevCategories) =>
-        prevCategories.filter((category) => category.id !== categoryId)
+        prevCategories.filter((category) => category.id !== categoryId),
       );
     } catch (error) {
       console.error("Error deleting category:", error);
@@ -121,12 +116,12 @@ const QuestionTable: React.FC = () => {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(updatedCategory),
-        }
+        },
       );
       setCategories((prevCategories) =>
         prevCategories.map((cat) =>
-          cat.id === updatedCategory.id ? updatedCategory : cat
-        )
+          cat.id === updatedCategory.id ? updatedCategory : cat,
+        ),
       );
       toast.success("Category updated successfully!");
       setUpdateModalOpen(false);
@@ -197,23 +192,16 @@ const QuestionTable: React.FC = () => {
         <AddQuestion mutate={mutate} />
       </div>
 
-      {isLoading ? (
-        <div className="animate-pulse space-y-4">
-          {[...Array(itemsPerPage)].map((_, index) => (
-            <div key={index} className="h-10 bg-gray-300 rounded-lg"></div>
-          ))}
-        </div>
-      ) : (
-        <TableData
-          filter={true}
-          label="TESTIMONIALS"
-          description="Manage and review all customer testimonials."
-          columns={columns}
-          data={categories}
-          hasStatusFilter={false}
-          // statusOptions={statusOptions}
-        />
-      )}
+      <DashboardResponsiveTable
+        filter={true}
+        label="TESTIMONIALS"
+        description="Manage and review all customer testimonials."
+        columns={columns}
+        data={categories}
+        loading={isLoading}
+        searchKeys={["name", "message"]}
+        // statusOptions={statusOptions}
+      />
 
       <DeleteConfirmationModal
         isOpen={deleteModalOpen}

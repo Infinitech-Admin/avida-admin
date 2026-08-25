@@ -70,6 +70,11 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
     }
   };
 
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+    setFormData((prev) => ({ ...prev, image: null }));
+  };
+
   const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -117,10 +122,24 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
   };
 
   return (
-    <Modal size="4xl" isOpen={true} onClose={onClose}>
+    <Modal
+      size="4xl"
+      isOpen={true}
+      onClose={onClose}
+      scrollBehavior="inside"
+      classNames={{
+        wrapper: "items-center",
+        base: "m-4 max-h-[85vh] sm:max-h-[90vh] overflow-hidden flex flex-col",
+        body: "overflow-y-auto",
+      }}
+    >
       <ModalContent>
         <ModalHeader>Update Contract</ModalHeader>
-        <form onSubmit={handleUpdateSubmit} encType="multipart/form-data">
+        <form
+          onSubmit={handleUpdateSubmit}
+          encType="multipart/form-data"
+          className="flex flex-col overflow-hidden flex-1"
+        >
           <ModalBody>
             <div className="flex flex-col gap-4">
               <div>
@@ -141,10 +160,10 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
               </div>
 
               {/* Image upload and preview */}
-              <div className="flex flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 {/* Upload */}
                 <div
-                  className="flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer relative w-1/2 h-48"
+                  className="flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 cursor-pointer relative w-full sm:w-1/2 h-40 sm:h-48"
                   onClick={() => {
                     if (thumbnailInputRef.current) {
                       thumbnailInputRef.current.value = "";
@@ -152,11 +171,14 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
                     }
                   }}
                 >
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500">
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500 w-full px-2">
                     <div className="flex flex-col justify-center items-center text-center">
-                      <LuImage size={72} />
-                      <h1>Click to Upload Thumbnail</h1>
-                      <p className="text-sm text-gray-500 mt-2">
+                      <LuImage size={56} className="sm:hidden" />
+                      <LuImage size={72} className="hidden sm:block" />
+                      <h1 className="text-sm sm:text-base">
+                        Click to Upload Thumbnail
+                      </h1>
+                      <p className="text-xs sm:text-sm text-gray-500 mt-2">
                         Supported formats: JPEG, PNG, GIF, BMP, TIFF
                       </p>
                     </div>
@@ -174,27 +196,41 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
 
                 {/* Preview */}
                 {imagePreview && (
-                  <div className="relative">
+                  <div className="relative w-full sm:w-1/2 h-40 sm:h-48">
                     <Image
                       src={imagePreview}
                       alt="Thumbnail Preview"
-                      className="w-full h-48 object-cover rounded"
+                      className="w-full h-40 sm:h-48 object-cover rounded"
+                    />
+                    <Button
+                      size="sm"
+                      isIconOnly
+                      startContent={<LuX />}
+                      onPress={handleRemoveImage}
+                      className="absolute -top-2 -right-2 z-10 bg-red-500 text-white rounded-full"
                     />
                   </div>
                 )}
               </div>
             </div>
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter className="flex-col-reverse sm:flex-row gap-2">
             <Button
               size="lg"
               variant="light"
               onPress={onClose}
               disabled={loading}
+              className="w-full sm:w-auto"
             >
               Cancel
             </Button>
-            <Button isLoading={loading} size="lg" type="submit" color="primary">
+            <Button
+              isLoading={loading}
+              size="lg"
+              type="submit"
+              color="primary"
+              className="w-full sm:w-auto"
+            >
               Save Changes
             </Button>
           </ModalFooter>
