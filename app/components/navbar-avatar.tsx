@@ -30,7 +30,7 @@ const NavbarAvatar = () => {
   );
 
   const avatar =
-    `https://infinitech-api6.site/profiles/${userAvatar?.record?.profile?.image}` ||
+    `https://infinitech-api27.site/profiles/${userAvatar?.record?.profile?.image}` ||
     "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg";
 
   return (

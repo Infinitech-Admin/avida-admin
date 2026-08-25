@@ -126,7 +126,7 @@ const PlannerTable: React.FC = () => {
       accessor: (category: Category) => (
         <Gallery withDownloadButton>
           <Item
-            original={`https://infinitech-api6.site/items/${category.image}`}
+            original={`https://infinitech-api27.site/items/${category.image}`}
             height="500"
             width="500"
           >
@@ -134,7 +134,7 @@ const PlannerTable: React.FC = () => {
               <img
                 ref={ref}
                 onClick={open}
-                src={`https://infinitech-api6.site/items/${category.image}`}
+                src={`https://infinitech-api27.site/items/${category.image}`}
                 alt="Resume"
                 className="w-16 h-16 object-cover rounded-lg cursor-pointer"
               />

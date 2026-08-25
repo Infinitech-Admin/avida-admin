@@ -62,7 +62,7 @@ export default function PropertyImageSlider({ images }: PropertyImageProps) {
         <>
           <div className="max-w-screen-md mx-auto text-center">
             <Image
-              src="https://infinitech-api6.site/no-image.jpg"
+              src="https://infinitech-api27.site/no-image.jpg"
               alt="No Image"
               className="w-full h-64 object-cover object-center"
             />
@@ -79,7 +79,7 @@ export default function PropertyImageSlider({ images }: PropertyImageProps) {
                   className={`keen-slider__slide number-slide${index}`}
                 >
                   <Image
-                    src={`https://infinitech-api6.site/properties/images/${image}`}
+                    src={`https://infinitech-api27.site/properties/images/${image}`}
                     alt={`Property image ${index + 1}`}
                     className="w-full object-cover object-center"
                   />
@@ -98,7 +98,7 @@ export default function PropertyImageSlider({ images }: PropertyImageProps) {
                   className={`keen-slider__slide number-slide${index}`}
                 >
                   <Image
-                    src={`https://infinitech-api6.site/properties/images/${image}`}
+                    src={`https://infinitech-api27.site/properties/images/${image}`}
                     alt={`Property image ${index + 1}`}
                     className="w-full h-24 object-cover object-center cursor-pointer"
                   />

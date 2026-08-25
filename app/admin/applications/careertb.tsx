@@ -166,7 +166,7 @@ const CareerTable: React.FC = () => {
       key: "resume",
       label: "Resume",
       renderCell: (category: Category) => {
-        const fileUrl = `https://infinitech-api6.site/careers/applications/${category.resume}`;
+        const fileUrl = `https://infinitech-api27.site/careers/applications/${category.resume}`;
         const fileExtension = category.resume.split(".").pop()?.toLowerCase();
 
         // Check if the file is an image

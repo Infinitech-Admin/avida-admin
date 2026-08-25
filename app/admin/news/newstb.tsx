@@ -176,11 +176,11 @@ const NewsTable: React.FC = () => {
         <a
           data-lightbox="gallery"
           data-title={category.headline}
-          href={`https://infinitech-api6.site/articles/${category.image}`}
+          href={`https://infinitech-api27.site/articles/${category.image}`}
         >
           <Image
             alt={category.headline}
-            src={`https://infinitech-api6.site/articles/${category.image}`}
+            src={`https://infinitech-api27.site/articles/${category.image}`}
             className="object-cover"
             height={80}
             width={120}

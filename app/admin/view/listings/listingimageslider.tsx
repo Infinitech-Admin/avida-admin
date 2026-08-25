@@ -61,7 +61,7 @@ export default function ListingImageSlider({ images }: ListingImageProps) {
         <>
           <div className="max-w-screen-md mx-auto text-center">
             <img
-              src="https://infinitech-api6.site/no-image.jpg"
+              src="https://infinitech-api27.site/no-image.jpg"
               alt="No Image"
               className="w-full h-64 object-cover object-center"
             />
@@ -78,7 +78,7 @@ export default function ListingImageSlider({ images }: ListingImageProps) {
                   className={`keen-slider__slide number-slide${index}`}
                 >
                   <img
-                    src={`https://infinitech-api6.site/listings/${image}`}
+                    src={`https://infinitech-api27.site/listings/${image}`}
                     alt={`Property image ${index + 1}`}
                     className="w-full h-64 object-cover object-center"
                   />
@@ -97,7 +97,7 @@ export default function ListingImageSlider({ images }: ListingImageProps) {
                   className={`keen-slider__slide number-slide${index}`}
                 >
                   <img
-                    src={`https://infinitech-api6.site/listings/${image}`}
+                    src={`https://infinitech-api27.site/listings/${image}`}
                     alt={`Property image ${index + 1}`}
                     className="w-full h-24 object-cover object-center cursor-pointer"
                   />

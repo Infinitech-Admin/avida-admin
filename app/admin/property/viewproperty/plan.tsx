@@ -165,7 +165,7 @@ const MasterPlan: React.FC<PropertyDetailsContentProps> = ({ id }) => {
                 <strong>Theme:</strong> {unitData.theme}
               </p>
               <img
-                src={`https://infinitech-api6.site/properties/plans/${unitData.image}`}
+                src={`https://infinitech-api27.site/properties/plans/${unitData.image}`}
                 alt={unitData.theme}
                 className="max-w-screen-lg w-full h-[60vh] mt-2 object-cover mx-auto"
               />

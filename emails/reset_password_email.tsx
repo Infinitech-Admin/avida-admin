@@ -28,7 +28,7 @@ export const ResetPasswordEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Img
-          src="https://infinitech-api6.site/logo/dmci-logo-only.png"
+          src="https://infinitech-api27.site/logo/dmci-logo-only.png"
           width="170"
           height="170"
           alt="DMCI Homes Logo"

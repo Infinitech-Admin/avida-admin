@@ -166,10 +166,10 @@ function Gallery() {
               className="relative overflow-hidden rounded-lg shadow-lg group"
             >
               <PhotoView
-                src={`https://infinitech-api6.site/images/${image.image}`}
+                src={`https://infinitech-api27.site/images/${image.image}`}
               >
                 <Image
-                  src={`https://infinitech-api6.site/images/${image.image}`}
+                  src={`https://infinitech-api27.site/images/${image.image}`}
                   className="w-full object-cover transform transition-transform duration-300 group-hover:scale-110"
                   width={1000}
                   height={250}

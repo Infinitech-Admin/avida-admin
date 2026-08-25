@@ -151,7 +151,7 @@ const VideoTable: React.FC = () => {
           <div className="flex items-center space-x-2">
             <Gallery withDownloadButton>
               <Item
-                original={`https://infinitech-api6.site/contracts/${category.image}`}
+                original={`https://infinitech-api27.site/contracts/${category.image}`}
                 height="800"
                 width="500"
               >
@@ -159,7 +159,7 @@ const VideoTable: React.FC = () => {
                   <Image
                     ref={ref}
                     onClick={open}
-                    src={`https://infinitech-api6.site/contracts/${category.image}`}
+                    src={`https://infinitech-api27.site/contracts/${category.image}`}
                     alt="Product Image"
                     className="object-cover cursor-pointer"
                     height={90}

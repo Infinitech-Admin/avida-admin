@@ -302,10 +302,10 @@ const PropertyDetailsContent: React.FC<PropertyDetailsContentProps> = ({
                     className="w-24 h-24 relative group"
                   >
                     <PhotoView
-                      src={`https://infinitech-api6.site/properties/images/${image}`}
+                      src={`https://infinitech-api27.site/properties/images/${image}`}
                     >
                       <img
-                        src={`https://infinitech-api6.site/properties/images/${image}`}
+                        src={`https://infinitech-api27.site/properties/images/${image}`}
                         alt={`Existing Image ${index + 1}`}
                         className="w-full h-full object-cover rounded-lg"
                       />

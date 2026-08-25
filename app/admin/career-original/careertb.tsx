@@ -129,7 +129,7 @@ const CareerTable: React.FC = () => {
       accessor: (category: Category) => (
         <Gallery withDownloadButton>
           <Item
-            original={`https://infinitech-api6.site/careers/images/${category.image}`}
+            original={`https://infinitech-api27.site/careers/images/${category.image}`}
             height="500"
             width="500"
           >
@@ -137,7 +137,7 @@ const CareerTable: React.FC = () => {
               <img
                 ref={ref}
                 onClick={open}
-                src={`https://infinitech-api6.site/careers/images/${category.image}`}
+                src={`https://infinitech-api27.site/careers/images/${category.image}`}
                 alt="Resume"
                 className="w-16 h-16 object-cover rounded-lg cursor-pointer"
               />

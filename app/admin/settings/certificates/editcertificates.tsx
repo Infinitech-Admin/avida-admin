@@ -202,7 +202,7 @@ export default function UpdateCertificates({
                   {certificate.image && (
                     <div className="mb-4 flex justify-center items-center">
                       <Image
-                        src={`https://infinitech-api6.site/certificates/${certificate.image}`}
+                        src={`https://infinitech-api27.site/certificates/${certificate.image}`}
                         alt="Current Certificate"
                         className="w-full h-auto rounded-md"
                         height={250}

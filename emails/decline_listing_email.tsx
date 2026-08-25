@@ -34,7 +34,7 @@ export const ListingDeclinedEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Img
-          src="https://infinitech-api6.site/logo/dmci-logo-only.png"
+          src="https://infinitech-api27.site/logo/dmci-logo-only.png"
           height="170"
           alt="DMCI Homes Logo"
           style={logo}

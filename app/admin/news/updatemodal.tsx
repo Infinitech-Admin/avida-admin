@@ -52,7 +52,7 @@ const UpdateNews: React.FC<UpdateNewsProps> = ({
   useEffect(() => {
     if (typeof initialData.image === "string") {
       // Construct the full image URL if the image is just a filename
-      const imageUrl = `https://infinitech-api6.site/articles/${initialData.image}`;
+      const imageUrl = `https://infinitech-api27.site/articles/${initialData.image}`;
       setImagePreview(imageUrl); // Set the full URL for image preview
     } else {
       setImagePreview(null); // Reset the image preview if it's not a URL or string

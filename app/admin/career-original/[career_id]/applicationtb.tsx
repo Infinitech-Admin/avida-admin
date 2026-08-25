@@ -155,7 +155,7 @@ const ApplicationTable: React.FC<ApplicationTableProps> = ({ career_id }) => {
       accessor: (category: Category) => (
         <Gallery withDownloadButton>
           <Item
-            original={`https://infinitech-api6.site/careers/applications/${category.resume}`}
+            original={`https://infinitech-api27.site/careers/applications/${category.resume}`}
             height="500"
             width="500"
           >
@@ -163,7 +163,7 @@ const ApplicationTable: React.FC<ApplicationTableProps> = ({ career_id }) => {
               <img
                 ref={ref}
                 onClick={open}
-                src={`hhttps://infinitech-api6.site/careers/applications/${category.resume}`}
+                src={`hhttps://infinitech-api27.site/careers/applications/${category.resume}`}
                 alt="Resume"
                 className="w-16 h-16 object-cover rounded-lg cursor-pointer"
               />
